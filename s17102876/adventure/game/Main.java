@@ -1,38 +1,49 @@
 package bcu.s17102876.adventure.game;
 
 import bcu.s17102876.adventure.effects.Effect;
-import bcu.s17102876.adventure.effects.player;
-import bcu.s17102876.adventure.effects.world;
-import bcu.s17102876.adventure.effects.location;
+import bcu.s17102876.adventure.model.Player;
+import bcu.s17102876.adventure.model.World;
+import java.io.*;
 
-import java.io.BufferedReader;
-import java.io.IOEException;
-import java.io.inputStreamReader;
+public class Main implements Runnable {
 
-public class Main {
 	// declaring the variables
 	private World world;
-	
-	public Main (World world) {
+	private Effect effect;
+
+	public Main(World world) {
 		this.world = world;
 	}
-	//Process of return when process is not succeeded. Override tells the compiler the intent of this process.
-	@override
-	public world run ()	{
-		player player =  new player (this world.getStaringLocation));
-		Effect startingeffect = new locationlocation();
-		startingEffect.execute(player, world);
-		BufferedReader keyboard = new BufferReadder (new InputStreamReadder) (system.in));
+
+	public void World() {
+
+		Player player = new Player(this.world.getStartingLocation());
+		Effect startingeffect = effect;
+
+		startingeffect.execute(player, world);
+
 		while (true) {
+
+			// setup and new input stream and buffered reader to scan for input from the user
+			InputStreamReader inputStream = new InputStreamReader(System.in);
+			BufferedReader scanKeyboard = new BufferedReader(inputStream);
+
+			String keyboardInput;
+
 			try {
-				string keybaordInput = keyboard.readLine ();
-				Effect effectToExecute = CommandParser.parsePlayerCommand(keyboardinput);
+
+				keyboardInput = scanKeyboard.readLine();
+				Effect effectToExecute = CommandParser.parsePlayerCommand(keyboardInput);
 				effectToExecute.execute(player, this.world);
-				catch (IQEexception e) {
-				catch (QuitException e) {
+			} catch (IOException e) {
 				break;
-				}
 			}
 		}
 	}
+
+	@Override
+	public void run() {
+		World();
+	}
+	// Override tells the compiler the intent of this process.
 }

@@ -1,55 +1,60 @@
 package bcu.s17102876.adventure.model;
 
-import java.ArraysList;
-import java.Collections;
-import java.List;
+import java.util.*;
+
+import bcu.s17102876.adventure.effects.Effect;
 
 public class Player {
+
 	// declaring variables
 	private Location location;
 	private List<Item> playerItem;
-	//A constructor which takes the player’s location
+
+	// A constructor which takes the player's location
 	public Player(Location location) {
-		this.loactions = locations;
-		this.playerItems = new ArraysList<>();
+		this.location = location;
+		this.playerItem = new ArrayList<>();
 	}
-	
+
 	public Location getLocation() {
 		return this.location;
 	}
-	
+
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	
+
 	public void takeItem(Item item) {
-		if (item.isPortable()) && ite.getLocatiob() == this.getLocation ()) {
-		this.playerItem.add(item);
-		} else }
-		throw new IllegalArgumentsException();	
+		// if the item is portable and the item location is our current location we can
+		// take item
+		if (item.isPortable() && item.getLocation() == this.getLocation()) {
+			this.playerItem.add(item);
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	public boolean hasItem(Item item) {
 		return this.getInventory().contains(item);
-		
+
 	}
-	
+
 	public boolean canSeeItem(Item item) {
-		return this.hasItems(item)|| item.getLocation() == this.getLocation();
+		// if we have the item we can see it or if its within our location we can also
+		// see it
+		return this.hasItem(item) || item.getLocation() == this.getLocation();
 	}
-	
+
 	public void dropItem(Item item) {
 		if (this.hasItem(item)) {
-			this.playerItems.remove(item);
+			this.playerItem.remove(item);
 			this.getLocation().addItem(item);
-		}
-		else {
-			throw new illegalArgumentException();
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
-	
+
 	public List<Item> getInventory() {
-		return Collection.unmodifiableLisst(this.playerItems);
+		return (List<Item>) Collections.unmodifiableCollection(this.playerItem);
 	}
 }
